@@ -5,6 +5,7 @@ import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-bow.component";
 
 const App = () => {
+  console.log("%c render", "color: red");
   const [searchField, setSearchField] = useState("");
   console.log(searchField);
 
