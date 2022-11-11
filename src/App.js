@@ -7,12 +7,18 @@ import SearchBox from "./components/search-box/search-bow.component";
 const App = () => {
   console.log("%c render", "color: red");
   const [searchField, setSearchField] = useState("");
-  console.log(searchField);
+  const [monsters, setMonsters] = useState("");
+
+  console.log("%c searchField", "color: green", searchField);
 
   const onSearchChange = e => {
     const searchFieldString = e.target.value.toLowerCase();
     setSearchField(searchFieldString);
   };
+
+  const filteredMonsters = monsters.filter(monster =>
+    monster.name.toLowerCase().includes(searchField)
+  );
 
   return (
     <div className="App">
@@ -22,7 +28,7 @@ const App = () => {
         placeholder="search monsters..."
         onChangeHandler={onSearchChange}
       />
-      {/* <CardList monsters={filteredMonsters} /> */}
+      <CardList monsters={filteredMonsters} />
     </div>
   );
 };
