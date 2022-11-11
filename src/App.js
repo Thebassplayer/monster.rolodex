@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { useState } from "react";
 
 import "./App.css";
@@ -6,7 +5,13 @@ import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-bow.component";
 
 const App = () => {
-  const [] = useState;
+  const [searchField, setSearchField] = useState("");
+  console.log(searchField);
+
+  const onSearchChange = e => {
+    const searchFieldString = e.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
 
   return (
     <div className="App">
@@ -16,7 +21,7 @@ const App = () => {
         placeholder="search monsters..."
         onChangeHandler={onSearchChange}
       />
-      <CardList monsters={filteredMonsters} />
+      {/* <CardList monsters={filteredMonsters} /> */}
     </div>
   );
 };
