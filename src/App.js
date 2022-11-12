@@ -1,24 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./App.css";
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-bow.component";
 
 const App = () => {
-  console.log("%c render", "color: red");
   const [searchField, setSearchField] = useState("");
-  const [monsters, setMonsters] = useState("");
+  const [monsters, setMonsters] = useState([]);
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
 
-  console.log("%c searchField", "color: green", searchField);
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        const users = await response.json();
+        setMonsters(users);
+      };
+
+      fetchData();
+    } catch (error) {
+      throw new Error("The error is: ", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const newFilteredMonsters = monsters.filter(monster =>
+      monster.name.toLowerCase().includes(searchField)
+    );
+
+    setFilteredMonsters(newFilteredMonsters);
+  }, [monsters, searchField]);
 
   const onSearchChange = e => {
     const searchFieldString = e.target.value.toLowerCase();
     setSearchField(searchFieldString);
   };
-
-  const filteredMonsters = monsters.filter(monster =>
-    monster.name.toLowerCase().includes(searchField)
-  );
 
   return (
     <div className="App">
